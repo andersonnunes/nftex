@@ -5,8 +5,11 @@ defmodule NftexWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", NftexWeb do
+  scope "/api" do
     pipe_through :api
+
+    forward "/graphql", Absinthe.Plug, schema: NftexWeb.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: NftexWeb.Schema
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
