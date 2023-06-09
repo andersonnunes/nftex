@@ -1,6 +1,7 @@
 defmodule NftexWeb.Schema.Types.Root do
   use Absinthe.Schema.Notation
 
+  alias Nftex.{Art, Repo}
   alias NftexWeb.Schema.Types
   alias NftexWeb.Resolvers.Art, as: ArtResolver
   alias NftexWeb.Middlewares.Log
@@ -15,6 +16,12 @@ defmodule NftexWeb.Schema.Types.Root do
 
       resolve &ArtResolver.get/2
       middleware Log
+    end
+
+    field :arts, list_of(:art) do
+      resolve fn _params, _context ->
+        {:ok, Repo.all(Art)}
+      end
     end
   end
 
