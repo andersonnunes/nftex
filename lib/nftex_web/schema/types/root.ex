@@ -3,6 +3,7 @@ defmodule NftexWeb.Schema.Types.Root do
 
   alias NftexWeb.Schema.Types
   alias NftexWeb.Resolvers.Art, as: ArtResolver
+  alias NftexWeb.Middlewares.Log
 
   import_types Types.Art
   import_types Types.Custom.UUID4
@@ -13,6 +14,7 @@ defmodule NftexWeb.Schema.Types.Root do
       arg :id, non_null(:uuid4)
 
       resolve &ArtResolver.get/2
+      middleware Log
     end
   end
 
@@ -22,6 +24,7 @@ defmodule NftexWeb.Schema.Types.Root do
       arg :input, non_null(:create_art_input)
 
       resolve &ArtResolver.create/2
+      middleware Log
     end
   end
 end
